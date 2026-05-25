@@ -1,0 +1,173 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Kavin Agency{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="page-header">
+        <h1><i class="fas fa-chart-line"></i> Dashboard</h1>
+        <p>Daily Arokya Products Sale Tracking Overview</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon blue">
+                <i class="fas fa-store"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="totalShops">0</h3>
+                <p>Total Shops</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green">
+                <i class="fas fa-box"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="totalProducts">0</h3>
+                <p>Total Products</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon orange">
+                <i class="fas fa-link"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="totalLinks">0</h3>
+                <p>Active Links</p>
+            </div>
+        </div>
+
+        <div class="stat-card logo-card">
+            <div class="logo-content">
+                <div class="logo-icon-wrapper">
+                    <i class="fas fa-store logo-main-icon"></i>
+                    <div class="logo-border-ring"></div>
+                </div>
+                <div class="stat-info logo-text">
+                    <div class="logo-name-wrapper">
+                        <h3 class="logo-title">
+                            <span class="logo-symbol">★</span>
+                            <span class="logo-name-main">KAVIN</span>
+                        </h3>
+                        <p class="logo-subtitle">
+                            <span class="logo-name-sub">AGENCY</span>
+                            <span class="logo-symbol">★</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sales-stats-grid">
+        <div class="stat-card">
+            <div class="stat-icon purple">
+                <i class="fas fa-calendar-day"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="todaySales">0</h3>
+                <p>Today's Sales</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon teal">
+                <i class="fas fa-calendar-week"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="weekSales">0</h3>
+                <p>This Week Sales</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon red">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="monthSales">0</h3>
+                <p>This Month Sales</p>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon gold">
+                <i class="fas fa-chart-bar"></i>
+            </div>
+            <div class="stat-info">
+                <h3 id="overallSales">0</h3>
+                <p>Overall Sales</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="calculators-section">
+        <h2>Quick access</h2>
+        <div class="calculator-buttons">
+            <a href="{{ url_for('calculators.denomination_calculator') }}" class="calculator-btn">
+                <div class="calculator-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <div class="calculator-info">
+                    <h3>Denomination Calculator</h3>
+                    <p>Calculate currency notes (500, 200, 100, 50, 20, 10, 5)</p>
+                </div>
+            </a>
+            <a href="{{ url_for('shop_product_price_link.index') }}" class="calculator-btn">
+                <div class="calculator-icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="calculator-info">
+                    <h3>Sales Tracking</h3>
+                    <p>Record and view daily Arokya product sales by shop</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(document).ready(function() {
+    loadDashboardStats();
+    
+    // Auto-refresh dashboard stats every 30 seconds
+    setInterval(function() {
+        loadDashboardStats();
+    }, 30000);
+    
+    // Refresh stats when page becomes visible (user switches back to tab)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            loadDashboardStats();
+        }
+    });
+    
+    function loadDashboardStats() {
+        $.ajax({
+            url: '/api/dashboard/stats',
+            method: 'GET',
+            success: function(response) {
+                if (response.success) {
+                    const stats = response.stats;
+                    $('#totalShops').text(stats.total_shops);
+                    $('#totalProducts').text(stats.total_products);
+                    $('#totalLinks').text(stats.total_links);
+                    $('#todaySales').text(stats.today_sales.amount.toLocaleString('en-IN'));
+                    $('#weekSales').text(stats.week_sales.toLocaleString('en-IN'));
+                    $('#monthSales').text(stats.month_sales.toLocaleString('en-IN'));
+                    $('#overallSales').text(stats.overall_sales.amount.toLocaleString('en-IN'));
+                }
+            },
+            error: function() {
+                console.error('Error loading dashboard stats');
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

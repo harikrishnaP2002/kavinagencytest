@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Product Master - Kavin Agency{% endblock %}
+
+{% block content %}
+<div class="page-container product-master-page">
+    <div class="page-header">
+        <div>
+            <h1><i class="fas fa-box"></i> Product Master</h1>
+        </div>
+        <button class="btn btn-primary" id="addProductBtn">
+            <i class="fas fa-plus"></i> Add New Product
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="productTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Product</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="productTableBody">
+                <tr>
+                    <td colspan="4" class="text-center">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- View Product Details Modal -->
+<div class="modal" id="viewProductModal">
+    <div class="modal-content view-modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-box"></i> Product Details</h2>
+            <span class="close" id="closeViewProductModal">&times;</span>
+        </div>
+        <div class="modal-body view-modal-body">
+            <div class="details-container">
+                <div class="detail-item">
+                    <div class="detail-label">ID</div>
+                    <div class="detail-value" id="viewProductId">-</div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Product Name</div>
+                        <div class="detail-value" id="viewProductName">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Product Code</div>
+                        <div class="detail-value" id="viewProductCode">-</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Category</div>
+                        <div class="detail-value" id="viewProductCategory">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Unit of Measure</div>
+                        <div class="detail-value" id="viewUnitOfMeasure">-</div>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Description</div>
+                    <div class="detail-value" id="viewProductDescription">-</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value" id="viewProductStatus">-</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeViewProductBtn">Close</button>
+            <button type="button" class="btn btn-primary" id="editProductFromViewBtn">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Product Modal - Bootstrap -->
+<div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="productModalLabel">
+                    <i class="fas fa-box"></i> <span id="modalTitle">Add Product</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" id="closeModal" aria-label="Close"></button>
+            </div>
+            <form id="productForm">
+                <div class="modal-body">
+                    <input type="hidden" id="productId">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="productName" class="form-label">Product Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" id="productName" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="productCode" class="form-label">Product Code</label>
+                            <input type="text" class="form-control form-control-sm" id="productCode">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productCategory" class="form-label">Category</label>
+                            <input type="text" class="form-control form-control-sm" id="productCategory">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="productDescription" class="form-label">Description</label>
+                            <textarea class="form-control form-control-sm" id="productDescription" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="unitOfMeasure" class="form-label">Unit of Measure</label>
+                            <select class="form-select form-select-sm" id="unitOfMeasure">
+                                <option value="PCS">PCS</option>
+                                <option value="KG">KG</option>
+                                <option value="LTR">LTR</option>
+                                <option value="BOX">BOX</option>
+                                <option value="PKT">PKT</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Status</label>
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" id="isActive" checked>
+                                <label class="form-check-label" for="isActive">
+                                    Active
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/product_master.js') }}"></script>
+{% endblock %}

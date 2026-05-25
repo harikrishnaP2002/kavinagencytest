@@ -1,0 +1,212 @@
+{% extends "base.html" %}
+
+{% block title %}Sales Tracking - Kavin Agency{% endblock %}
+
+{% block content %}
+<div class="sales-tracking-page">
+<div class="page-container">
+    <div class="page-header">
+        <div>
+            <h1><i class="fas fa-dollar-sign"></i> Sales Tracking</h1>
+        </div>
+        <button class="btn btn-primary" id="addSaleBtn">
+            <i class="fas fa-plus"></i> Record sales
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="saleTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Sale Date</th>
+                    <th>Shop Name</th>
+                    <th>Product Name</th>
+                    <th>Amount</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="saleTableBody">
+                <tr>
+                    <td colspan="8" class="text-center">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modals kept inside .sales-tracking-page so layout/CSS selectors apply -->
+<!-- View Sale Details Modal -->
+<div class="modal" id="viewSaleModal">
+    <div class="modal-content view-modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-dollar-sign"></i> Sale Details</h2>
+            <span class="close" id="closeViewModal">&times;</span>
+        </div>
+        <div class="modal-body view-modal-body">
+            <div class="details-container">
+                <div class="detail-item">
+                    <div class="detail-label">ID</div>
+                    <div class="detail-value" id="viewSaleId">-</div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Shop Name</div>
+                        <div class="detail-value" id="viewShopName">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Product Name</div>
+                        <div class="detail-value" id="viewProductName">-</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Sale Date</div>
+                        <div class="detail-value" id="viewSaleDate">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Amount</div>
+                        <div class="detail-value" id="viewAmount">-</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Quantity</div>
+                        <div class="detail-value" id="viewQuantity">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Total Amount</div>
+                        <div class="detail-value" id="viewTotalAmount">-</div>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Notes</div>
+                    <div class="detail-value" id="viewNotes">-</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeViewBtn">Close</button>
+            <button type="button" class="btn btn-primary" id="editFromViewBtn">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Sale Modal - Bootstrap -->
+<div class="modal fade" id="saleModal" tabindex="-1" aria-labelledby="saleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl modal-sale-entry" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="saleModalLabel" title="One shop and date; add a row per product. Totals update as you type.">
+                    <i class="fas fa-dollar-sign"></i> <span id="modalTitle">Record sales</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" id="closeModal" aria-label="Close"></button>
+            </div>
+            <form id="saleForm" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" id="saleId">
+
+                    <div id="batchSaleSection">
+                        <div class="row mb-3 g-2 align-items-end batch-entry-top-row">
+                            <div class="col-12 col-lg-8 batch-shop-col">
+                                <label for="batchShopId" class="form-label">Shop <span class="text-danger">*</span></label>
+                                <select class="form-select batch-shop-select" id="batchShopId">
+                                    <option value="">Select shop</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <label for="batchSaleDate" class="form-label">Sale date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="batchSaleDate" required>
+                            </div>
+                        </div>
+                        <div class="table-responsive batch-lines-wrap">
+                            <table class="table table-sm table-bordered align-middle mb-2 batch-lines-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="batch-col-product" scope="col">Product</th>
+                                        <th class="batch-col-qty" scope="col">Qty</th>
+                                        <th class="batch-col-price" scope="col">Price</th>
+                                        <th class="batch-col-line" scope="col">Total</th>
+                                        <th class="batch-col-remove" scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="batchLinesBody"></tbody>
+                            </table>
+                        </div>
+                        <button type="button" class="btn btn-outline-primary btn-sm mb-2" id="addBatchLineBtn">
+                            <i class="fas fa-plus"></i> Add product row
+                        </button>
+                        <div class="batch-grand-total mb-3">
+                            Grand total: <span id="batchGrandTotal">0.00</span>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-12">
+                                <label for="batchNotes" class="form-label">Notes <span class="text-muted fw-normal">(optional, applies to all lines)</span></label>
+                                <textarea class="form-control form-control-sm" id="batchNotes" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="singleEditSection" class="d-none">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="shopId" class="form-label">Shop Name <span class="text-danger">*</span></label>
+                                <select class="form-select form-select-sm" id="shopId">
+                                    <option value="">Select Shop</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productId" class="form-label">Product Name <span class="text-danger">*</span></label>
+                                <select class="form-select form-select-sm" id="productId">
+                                    <option value="">Choose…</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="saleDate" class="form-label">Sale Date <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control form-control-sm" id="saleDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="amount" class="form-label">Amount <span class="text-danger">*</span></label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" id="amount" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="quantitySold" class="form-label">Quantity <span class="text-danger">*</span></label>
+                                <input type="number" min="1" class="form-control form-control-sm" id="quantitySold" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="totalAmount" class="form-label">Total amount <span class="text-danger">*</span></label>
+                                <input type="number" step="0.01" class="form-control form-control-sm" id="totalAmount" readonly>
+                            </div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-12">
+                                <label for="notes" class="form-label">Notes</label>
+                                <textarea class="form-control form-control-sm" id="notes" rows="2"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm" id="saleSubmitBtn">
+                        <i class="fas fa-save"></i> <span id="saleSubmitLabel">Save all</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/shop_product_price_link.js') }}"></script>
+{% endblock %}

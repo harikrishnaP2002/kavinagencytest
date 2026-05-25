@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Shop Master - Kavin Agency{% endblock %}
+
+{% block content %}
+<div class="page-container shop-master-page">
+    <div class="page-header">
+        <div>
+            <h1><i class="fas fa-store"></i> Shop Master</h1>
+        </div>
+        <button class="btn btn-primary" id="addShopBtn">
+            <i class="fas fa-plus"></i> Add New Shop
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="shopTable">
+            <thead>
+                <tr>
+                    <th>Keyno</th>
+                    <th>Shop Name</th>
+                    <th>Shop Place</th>
+                    <th>Owner Name</th>
+                    <th>Phone Number</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="shopTableBody">
+                <tr>
+                    <td colspan="7" class="text-center">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- View Shop Details Modal -->
+<div class="modal" id="viewShopModal">
+    <div class="modal-content view-modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-store"></i> Shop Details</h2>
+            <span class="close" id="closeViewModal">&times;</span>
+        </div>
+        <div class="modal-body view-modal-body">
+            <div class="details-container">
+                <div class="detail-item">
+                    <div class="detail-label">Keyno</div>
+                    <div class="detail-value" id="viewKeyno">-</div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Shop Name</div>
+                        <div class="detail-value" id="viewShopName">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Shop Place</div>
+                        <div class="detail-value" id="viewShopPlace">-</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Owner Name</div>
+                        <div class="detail-value" id="viewOwnerName">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Phone Number</div>
+                        <div class="detail-value" id="viewPhoneNumber">-</div>
+                    </div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">Status</div>
+                    <div class="detail-value" id="viewStatus">-</div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeViewBtn">Close</button>
+            <button type="button" class="btn btn-primary" id="editFromViewBtn">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Shop Modal - Bootstrap -->
+<div class="modal fade" id="shopModal" tabindex="-1" aria-labelledby="shopModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="shopModalLabel">
+                    <i class="fas fa-store"></i> <span id="modalTitle">Add Shop</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" id="closeModal" aria-label="Close"></button>
+            </div>
+            <form id="shopForm">
+                <div class="modal-body">
+                    <input type="hidden" id="shopId">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="shopName" class="form-label">Shop Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" id="shopName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="shopPlace" class="form-label">Shop Place <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control form-control-sm" id="shopPlace" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select form-select-sm" id="status" required>
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label for="ownerName" class="form-label">Owner Name</label>
+                            <input type="text" class="form-control form-control-sm" id="ownerName">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control form-control-sm" id="phoneNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/shop_master.js') }}"></script>
+{% endblock %}

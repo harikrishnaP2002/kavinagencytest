@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Shop-Product Link - Kavin Agency{% endblock %}
+
+{% block content %}
+<div class="page-container shop-product-link-page">
+    <div class="page-header">
+        <div>
+            <h1><i class="fas fa-link"></i> Shop-Product Link Master</h1>
+        </div>
+        <button class="btn btn-primary" id="addLinkBtn">
+            <i class="fas fa-plus"></i> Add New Link
+        </button>
+    </div>
+
+    <div class="table-container">
+        <table class="data-table" id="linkTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Shop Name</th>
+                    <th>Product Name</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="linkTableBody">
+                <tr>
+                    <td colspan="6" class="text-center">Loading...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- View Link Details Modal -->
+<div class="modal" id="viewLinkModal">
+    <div class="modal-content view-modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-link"></i> Link Details</h2>
+            <span class="close" id="closeViewModal">&times;</span>
+        </div>
+        <div class="modal-body view-modal-body">
+            <div class="details-container">
+                <div class="detail-item">
+                    <div class="detail-label">ID</div>
+                    <div class="detail-value" id="viewLinkId">-</div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Shop Name</div>
+                        <div class="detail-value" id="viewShopName">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Product Name</div>
+                        <div class="detail-value" id="viewProductName">-</div>
+                    </div>
+                </div>
+                <div class="details-row">
+                    <div class="detail-item">
+                        <div class="detail-label">Amount</div>
+                        <div class="detail-value" id="viewAmount">-</div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-label">Status</div>
+                        <div class="detail-value" id="viewStatus">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="closeViewBtn">Close</button>
+            <button type="button" class="btn btn-primary" id="editFromViewBtn">
+                <i class="fas fa-edit"></i> Edit
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Add/Edit Link Modal - Bootstrap -->
+<div class="modal fade" id="linkModal" tabindex="-1" aria-labelledby="linkModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="linkModalLabel">
+                    <i class="fas fa-link"></i> <span id="modalTitle">Add Link</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" id="closeModal" aria-label="Close"></button>
+            </div>
+            <form id="linkForm">
+                <div class="modal-body">
+                    <input type="hidden" id="linkId">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="shopId" class="form-label">Shop Name <span class="text-danger">*</span></label>
+                            <select class="form-select form-select-sm" id="shopId" required>
+                                <option value="">Select Shop</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="productId" class="form-label">Product Name <span class="text-danger">*</span></label>
+                            <select class="form-select form-select-sm" id="productId" required>
+                                <option value="">Select Product</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" step="0.01" class="form-control form-control-sm" id="amount">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                            <select class="form-select form-select-sm" id="status" required>
+                                <option value="true">Active</option>
+                                <option value="false">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" id="cancelBtn">Cancel</button>
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/shop_product_link.js') }}"></script>
+{% endblock %}

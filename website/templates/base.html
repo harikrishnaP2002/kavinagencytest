@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kavin Agency - Product Sale Tracking{% endblock %}</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS - Original Design -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            <div class="nav-right">
+                {% if request.endpoint != 'dashboard.index' %}
+                <a href="{{ url_for('dashboard.index') }}" class="nav-link nav-link-back">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h3 class="sidebar-title">Menu</h3>
+            <button class="sidebar-toggle-btn" id="sidebarCollapseBtn" title="Collapse/Expand">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="{{ url_for('shop_master.index') }}" class="sidebar-link">
+                    <i class="fas fa-store"></i>
+                    <span>Shop Master</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('product_master.index') }}" class="sidebar-link">
+                    <i class="fas fa-box"></i>
+                    <span>Product Master</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('shop_product_link.index') }}" class="sidebar-link">
+                    <i class="fas fa-link"></i>
+                    <span>Shop-Product Link</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('shop_product_price_link.index') }}" class="sidebar-link">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Sales Tracking</span>
+                </a>
+            </li>
+            <li class="sidebar-divider"></li>
+            <li>
+                <a href="{{ url_for('calculators.denomination_calculator') }}" class="sidebar-link">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span>Denomination Calculator</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('calculators.product_calculator') }}" class="sidebar-link">
+                    <i class="fas fa-calculator"></i>
+                    <span>Product Calculator</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Kavin Agency. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+    // Hide footer and apply no-scroll design on all pages
+    document.body.classList.add('no-footer-page');
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

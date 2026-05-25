@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+
+{% block title %}Denomination Calculator - Kavin Agency{% endblock %}
+
+{% block content %}
+<div class="page-container denomination-calc-page">
+    <div class="calculator-container">
+        <div class="calculator-card">
+            <div class="denomination-table-wrapper">
+                <table class="denomination-table">
+                    <thead>
+                        <tr>
+                            <th>Amount</th>
+                            <th>Count</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/500-rupee-note.png') }}" alt="500 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E500%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">500</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note500" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value500">0</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/200-rupee-note.png') }}" alt="200 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E200%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">200</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note200" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value200">0</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/100-rupee-note.png') }}" alt="100 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E100%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">100</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note100" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value100">0</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/50-rupee-note.png') }}" alt="50 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E50%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">50</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note50" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value50">0</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/20-rupee-note.png') }}" alt="20 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E20%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">20</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note20" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value20">0</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/10-rupee-note.png') }}" alt="10 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E10%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">10</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note10" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value10">0</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="note-image-cell">
+                                    <img src="{{ url_for('static', filename='images/5-rupee-note.png') }}" alt="5 Note" class="note-image" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'70\' height=\'35\'%3E%3Crect width=\'70\' height=\'35\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' text-anchor=\'middle\' dominant-baseline=\'middle\' font-family=\'Arial\' font-size=\'12\' fill=\'%23999\'%3E5%3C/text%3E%3C/svg%3E';">
+                                    <span class="note-label">5</span>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="number" id="note5" min="0" value="0" class="note-input" placeholder="0">
+                            </td>
+                            <td>
+                                <div class="calculated-value" id="value5">0</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="2" class="total-label">
+                                <strong>Total Amount</strong>
+                            </td>
+                            <td class="total-amount-cell">
+                                <div class="total-amount" id="totalAmount">0.00</div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="calculator-actions">
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class="fas fa-redo"></i> Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/denomination_calculator.js') }}"></script>
+{% endblock %}
